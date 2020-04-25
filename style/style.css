@@ -1,0 +1,37 @@
+:root {
+    --grid-size:0;
+    --cell-size:90px
+}
+
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+#grid {
+    display: grid;
+    grid-template: repeat(var(--grid-size), var(--cell-size)) / repeat(var(--grid-size), var(--cell-size));
+    width: calc(var(--grid-size)*var(--cell-size));
+    border: 3px solid black;
+    margin: auto;
+}
+
+.cell {
+    justify-self: stretch;
+    background-color: white;
+    border: 3px solid black;
+    text-align: center;
+    font-size: calc(0.66*var(--cell-size));
+    line-height: var(--cell-size);
+}
+
+header {
+    text-align: center;
+}
+
+#dropdown-size-list, #render-button {
+    margin: 20px 0;
+}
