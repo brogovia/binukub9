@@ -1,37 +1,62 @@
 :root {
     --grid-size:0;
-    --cell-size:90px
+    --cell-size:80px
 }
 
 body {
     font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
-h1 {
+header {
     text-align: center;
+}
+
+header h1 {
+    margin-bottom: 0;
+}
+
+header h4 {
+    margin: 0;
 }
 
 #grid {
     display: grid;
     grid-template: repeat(var(--grid-size), var(--cell-size)) / repeat(var(--grid-size), var(--cell-size));
     width: calc(var(--grid-size)*var(--cell-size));
-    border: 3px solid black;
     margin: auto;
+    padding-top: calc(-1*var(--cell-size));
 }
 
 .cell {
     justify-self: stretch;
     background-color: white;
-    border: 3px solid black;
+    /*border: 3px solid black;*/
     text-align: center;
     font-size: calc(0.66*var(--cell-size));
     line-height: var(--cell-size);
+    box-shadow: 0 0 0 5px #000000;
 }
 
-header {
-    text-align: center;
+.base {
+    box-shadow: none;
 }
+
+#grid-frame {
+    position: absolute;
+    
+    width: calc(var(--grid-size)*var(--cell-size));
+    margin: auto;
+}
+
 
 #dropdown-size-list, #render-button {
     margin: 20px 0;
+}
+
+button {
+    display:inline-block;
+    width: 300px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
 }

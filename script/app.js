@@ -10,28 +10,74 @@ const origin = [
     ['73', '74', '75', '76', '77', '78', '79', '80', '81']
 ]
 
+let order = [0,1,2,3,4,5,6,7,8];
+let base = [0,1,2,3,4,5,6,7,8];
 
-function GenerateGrid() {
+//Probabilite d'apparition d'un nombre dans les cases
+const proba = 0.3;
+
+
+
+
+function displayGrid() {
+    //On recupere la taille de la grille choisie par l'utilisateur
     const e = document.getElementById("size-select");
-    const container = document.getElementById("container");
-    container.innerHTML = '';
-    const grid = document.createElement('div');
-    grid.id = 'grid';
-    container.appendChild(grid);
     const size = e.options[e.selectedIndex].value;
-    document.documentElement.style
-        .setProperty('--grid-size', size);
 
-    for (let i = 0; i < size; i++) {
-        for (let j = 0; j < size; j++) {
+    //On efface un eventuelle ancienne grill qui se trouve à l'interieur du container
+    const grid = document.getElementById("grid");
+    grid.innerHTML = '';
+
+    const matrix = generateMatrix();
+
+    //On fixe la valeur de la variable css --grid-size
+    document.documentElement.style
+        .setProperty('--grid-size', parseInt(size)+1);
+
+    //Création des cells
+    for (let i = 0; i < parseInt(size)+1; i++) {
+        for (let j = 0; j < parseInt(size)+1; j++) {
             addCellToGrid(i,j);
         }
     }
+
+    function generateMatrix() {
+        const matrix = [];
+        const slicedOrder = order.slice(0,size);
+        const slicedBase = shuffle(base.slice(0,size));
+        console.log(slicedBase);
+        matrix.push([''].concat(slicedBase.map(x=>x+1)));
+        console.log(matrix);
+        for(let i=1; i<parseInt(size)+1; i++){
+            matrix.push([slicedOrder[i-1]+1]);
+            console.log(matrix);
+            for(let j=1; j<parseInt(size)+1; j++){
+                matrix[i].push(Math.random()>proba ? '' : origin[i-1][slicedBase[j-1]]);
+            }
+        }
+        return matrix;
+    }
+
+    function addCellToGrid(i, j) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        if(i===0 || j===0){
+            cell.classList.add("base");
+        }
+        cell.innerHTML = `${matrix[i][j]}`;
+        grid.appendChild(cell);
+    }
+
 }
 
-function addCellToGrid(i, j) {
-    const cell = document.createElement('div');
-    cell.className = 'cell';
-    cell.innerHTML = `${origin[i][j]}`;
-    grid.appendChild(cell);
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
 }
+
